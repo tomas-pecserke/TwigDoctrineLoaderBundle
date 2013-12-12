@@ -1,0 +1,42 @@
+{
+    "name": "pecserke/twig-doctrine-loader-bundle",
+    "type": "symfony-bundle",
+    "description": "Symfony2 Twig DoctrineLoader Bundle",
+    "keywords": [ "Doctrine", "Twig", "Template", "Loader" ],
+    "license": "MIT",
+    "homepage": "https://github.com/tomas-pecserke/TwigDoctrineLoaderBundle",
+    "authors": [
+        {
+            "name": "Tomáš Pecsérke",
+            "email": "tomas@pecserke.eu"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Pecserke\\Bundle\\TwigDoctrineLoaderBundle": "" }
+    },
+    "target-dir": "Pecserke/Bundle/TwigDoctrineLoaderBundle",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/twig-bundle": "~2.2",
+        "symfony/doctrine-bridge": "~2.3"
+    },
+    "require-dev": {
+        "doctrine/doctrine-bundle": "~1.2",
+        "doctrine/orm": "~2.3",
+        "doctrine/mongodb-odm-bundle": "master@dev",
+        "doctrine/mongodb-odm": "*@beta",
+        "doctrine/couchdb-odm-bundle": "master@dev",
+        "doctrine/couchdb-odm": "master@dev",
+        "doctrine/couchdb": "*@dev"
+    },
+    "suggest": {
+        "doctrine/orm": "Support for loading twig templates from relation databases",
+        "doctrine/mongodb-odm": "Support for loading twig templates from MongoDB"
+    },
+    "minimum-stability": "stable",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}

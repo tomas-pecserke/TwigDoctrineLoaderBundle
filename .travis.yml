@@ -1,0 +1,20 @@
+language: php
+
+php:
+    - 5.3.3
+    - 5.3
+    - 5.4
+    - 5.5
+
+env:
+    - TWIG_BUNDLE_VERSION=2.2
+    - TWIG_BUNDLE_VERSION=2.3
+    - TWIG_BUNDLE_VERSION=2.4
+
+before_script:
+    - curl -s http://getcomposer.org/installer | php
+    - php composer.phar require symfony/twig-bundle:${TWIG_BUNDLE_VERSION} --prefer-source
+
+notifications:
+    email:
+        - tomas@pecserke.eu
