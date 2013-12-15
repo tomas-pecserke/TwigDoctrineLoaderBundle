@@ -1,0 +1,17 @@
+Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template:
+    type: entity
+    id:
+        id:
+            type: integer
+            generator: { strategy: AUTO }
+    fields:
+        name:
+            type: string
+            unique: true
+        source:
+            type: text
+        modifiedAt:
+            type: datetime
+    lifecycleCallbacks:
+        prePersist: [ onModified ]
+        preUpdate: [ onModified ]

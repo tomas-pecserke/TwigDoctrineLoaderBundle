@@ -34,7 +34,10 @@ class Configuration implements ConfigurationInterface
                 ->enumNode('backend')
                     ->values(array('orm', 'mongodb', 'couchdb'))
                     ->defaultValue('orm') // use ORM by default
-                    ->info('chooses doctrine backend for model')
+                ->end()
+                ->scalarNode('manager_name')
+                    ->defaultValue('default')
+                    ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('template_class')
                     ->defaultValue()
@@ -46,6 +49,9 @@ class Configuration implements ConfigurationInterface
                         })
                         ->thenInvalid('Template class "%s" is not subclass of "' . self::DEFAULT_TEMPLATE_CLASS . '".')
                     ->end()
+                ->end()
+                ->scalarNode('cache_prefix')
+                    ->defaultNull()
                 ->end()
             ->end()
         ;

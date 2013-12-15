@@ -1,0 +1,15 @@
+Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template:
+    type: document
+    fields:
+        id:
+            id:  true
+        name:
+            type: string
+            unique: true
+        source:
+            type: string
+        modifiedAt:
+            type: datetime
+    lifecycleCallbacks:
+        prePersist: [ onModified ]
+        preUpdate: [ onModified ]

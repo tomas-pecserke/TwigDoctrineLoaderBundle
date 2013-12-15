@@ -30,21 +30,32 @@ class PecserkeTwigDoctrineLoaderExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter(sprintf('%s.backend.%s', $this->getAlias(), $config['backend']), true);
+        $container->setParameter(sprintf('%s.model_manager_name', $this->getAlias()), $config['manager_name']);
         switch ($config['backend']) {
-            case 'orm':
-                $objectManagerServiceId = 'doctrine.default_entity_manager';
-                break;
             case 'mongodb':
-                $objectManagerServiceId = 'doctrine_mongodb.odm.default_document_manager';
+                $objectManagerServiceId = 'doctrine_mongodb.odm.%s_document_manager';
                 break;
             case 'couchdb':
-                $objectManagerServiceId = 'doctrine_couchdb.default_document_manager';
+                $objectManagerServiceId = 'doctrine_couchdb.%s_document_manager';
+                break;
+            case 'orm':
+            default:
+                $objectManagerServiceId = 'doctrine.%s_entity_manager';
                 break;
         }
+        $objectManagerServiceId = sprintf($objectManagerServiceId, $config['manager_name']);
         $container->setAlias('pecserke_twig_doctrine_loader.object_manager', $objectManagerServiceId);
         $container->setParameter('pecserke_twig_doctrine_loader.model.template.class', $config['template_class']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+
+        $cachePrefix = $config['cache_prefix'] ?: sprintf(
+            '%s/%s/',
+            $container->getParameter('kernel.root_dir'),
+            $this->getAlias()
+        );
+        $definition = $container->getDefinition('pecserke_twig_doctrine_loader.twig.loader.doctrine');
+        $definition->replaceArgument(1, $cachePrefix);
     }
 }

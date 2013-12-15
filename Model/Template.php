@@ -17,6 +17,11 @@ namespace Pecserke\Bundle\TwigDoctrineLoaderBundle\Model;
 class Template
 {
     /**
+     * @var mixed
+     */
+    protected $id;
+
+    /**
      * @var string
      */
     protected $name;
@@ -30,6 +35,14 @@ class Template
      * @var \DateTime
      */
     protected $modifiedAt;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * @return string
