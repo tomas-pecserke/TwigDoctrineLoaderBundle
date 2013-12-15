@@ -1,6 +1,19 @@
 <?php
+
+/*
+ * (c) Tomas Pecserke <tomas@pecserke.eu>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Pecserke\Bundle\TwigDoctrineLoaderBundle\Model;
 
+/**
+ * Represents the Twig template data.
+ *
+ * @author Tomas Pecserke <tomas@pecserke.eu>
+ */
 class Template
 {
     /**
@@ -65,13 +78,10 @@ class Template
     }
 
     /**
-     * @param \DateTime $modifiedAt
-     * @return $this
+     * Lifecycle callback updating last modification time.
      */
-    public function setModifiedAt(\DateTime $modifiedAt)
+    public function onModified()
     {
-        $this->modifiedAt = $modifiedAt;
-
-        return $this;
+        $this->modifiedAt = new \DateTime();
     }
 }

@@ -18,7 +18,8 @@
     "require": {
         "php": ">=5.3.3",
         "symfony/twig-bundle": "~2.2",
-        "symfony/doctrine-bridge": "~2.3"
+        "symfony/doctrine-bridge": "~2.3",
+        "pecserke/universal-mappings": "~1.0@dev"
     },
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.2",
@@ -30,8 +31,9 @@
         "doctrine/couchdb": "*@dev"
     },
     "suggest": {
-        "doctrine/orm": "Support for loading twig templates from relation databases",
-        "doctrine/mongodb-odm": "Support for loading twig templates from MongoDB"
+        "doctrine/doctrine-bundle": "Support for loading twig templates from relation databases",
+        "doctrine/mongodb-odm-bundle": "Support for loading twig templates from MongoDB",
+        "doctrine/couchdb-odm-bundle": "Support for loading twig templates from CouchDB"
     },
     "minimum-stability": "stable",
     "extra": {

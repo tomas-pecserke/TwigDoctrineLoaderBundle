@@ -1,3 +1,0 @@
-pecserke_twig_doctrine_loader_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: PecserkeTwigDoctrineLoaderBundle:Default:index }

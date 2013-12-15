@@ -1,7 +1,12 @@
 parameters:
-#    pecserke_twig_doctrine_loader.example.class: Pecserke\Bundle\TwigDoctrineLoaderBundle\Example
+    pecserke_twig_doctrine_loader.twig.loader.doctrine.class: Pecserke\Bundle\TwigDoctrineLoaderBundle\Twig\Loader\Doctrine
 
 services:
-#    pecserke_twig_doctrine_loader.example:
-#        class: %pecserke_twig_doctrine_loader.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    pecserke_twig_doctrine_loader.twig.loader.doctrine:
+        class: %pecserke_twig_doctrine_loader.twig.loader.doctrine.class%
+        arguments: [ @pecserke_twig_doctrine_loader.template_repository, ~ ]
+
+    pecserke_twig_doctrine_loader.template_repository:
+        factory_service: pecserke_twig_doctrine_loader.object_manager
+        factory_method: getRepository
+        arguments: [ %pecserke_twig_doctrine_loader.model.template.class% ]

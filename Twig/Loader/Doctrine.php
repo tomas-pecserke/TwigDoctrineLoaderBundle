@@ -1,13 +1,24 @@
 <?php
+
+/*
+ * (c) Tomas Pecserke <tomas@pecserke.eu>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Pecserke\Bundle\TwigDoctrineLoaderBundle\Twig\Loader;
 
 use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ODM\MongoDB\DocumentRepository;
-use Doctrine\ODM\MongoDB\Query\Builder;
+use Doctrine\ODM\MongoDB\DocumentRepository as MongoDBDocumentRepository;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template;
 
+/**
+ * Loads template from database using Doctrine 2.
+ *
+ * @author Tomas Pecserke <tomas@pecserke.eu>
+ */
 class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
 {
     /**
@@ -35,9 +46,10 @@ class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     public function exists($name)
     {
-        if (class_exists('Doctrine\ORM\EntityRepository') && $this->templateRepository instanceof EntityRepository) {
-            /* @var QueryBuilder $qb */
-            $qb = $this->templateRepository->createQueryBuilder('t');
+        $repo = $this->templateRepository;
+
+        if (class_exists('Doctrine\ORM\EntityRepository') && $repo instanceof EntityRepository) {
+            $qb = $repo->createQueryBuilder('t');
             $qb
                 ->select('count(t)')
                 ->where($qb->expr()->eq('t.name', ':name'))
@@ -47,14 +59,15 @@ class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
             return $qb->getQuery()->getSingleScalarResult() !== 0;
         }
 
-        if (class_exists('Doctrine\ODM\MongoDB\DocumentRepository') && $this->templateRepository instanceof DocumentRepository) {
-            /* @var Builder $qb */
-            $qb = $this->templateRepository->createQueryBuilder()->field('name')->equals($name);
+        if (class_exists('Doctrine\ODM\MongoDB\DocumentRepository') && $repo instanceof MongoDBDocumentRepository) {
+            $qb = $repo->createQueryBuilder()->field('name')->equals($name);
 
             return $qb->getQuery()->execute()->count() !== 0;
         }
 
-        return $this->templateRepository->findOneByName($name) !== null;
+        // TODO CouchDB specific efficient exists implementation
+
+        return $this->templateRepository->findOneBy(array('name', $name)) !== null;
     }
 
     /**
@@ -70,7 +83,7 @@ class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     public function getCacheKey($name)
     {
-        return $this->cacheKeyPrefix . $this->getTemplate($name)->getName();
+        return $this->cacheKeyPrefix . $name;
     }
 
     /**
@@ -88,7 +101,7 @@ class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     protected function getTemplate($name)
     {
-        $template = $this->templateRepository->findOneByName($name);
+        $template = $this->templateRepository->findOneBy(array('name', $name));
 
         if ($template === null) {
             throw new \Twig_Error_Loader(sprintf('Unable to find template "%s".', $name));

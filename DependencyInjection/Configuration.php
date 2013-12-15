@@ -1,17 +1,26 @@
 <?php
 
+/*
+ * (c) Tomas Pecserke <tomas@pecserke.eu>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Pecserke\Bundle\TwigDoctrineLoaderBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This class contains the configuration information for the bundle
  *
- * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
+ * @author Tomas Pecserke <tomas@pecserke.eu>
  */
 class Configuration implements ConfigurationInterface
 {
+    const DEFAULT_TEMPLATE_CLASS = 'Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template';
+
     /**
      * {@inheritDoc}
      */
@@ -20,9 +29,26 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('pecserke_twig_doctrine_loader');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->enumNode('backend')
+                    ->values(array('orm', 'mongodb', 'couchdb'))
+                    ->defaultValue('orm') // use ORM by default
+                    ->info('chooses doctrine backend for model')
+                ->end()
+                ->scalarNode('template_class')
+                    ->defaultValue()
+                    ->validate(self::DEFAULT_TEMPLATE_CLASS)
+                        ->ifTrue(function($class) {
+                            return $class !== self::DEFAULT_TEMPLATE_CLASS &&
+                                !is_subclass_of($class, self::DEFAULT_TEMPLATE_CLASS)
+                            ;
+                        })
+                        ->thenInvalid('Template class "%s" is not subclass of "' . self::DEFAULT_TEMPLATE_CLASS . '".')
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }
