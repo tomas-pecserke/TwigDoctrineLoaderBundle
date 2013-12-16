@@ -65,9 +65,7 @@ class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
             return $qb->getQuery()->execute()->count() !== 0;
         }
 
-        // TODO CouchDB specific efficient exists implementation
-
-        return $this->templateRepository->findOneBy(array('name', $name)) !== null;
+        return $this->templateRepository->findOneBy(array('name' => $name)) !== null;
     }
 
     /**
@@ -101,7 +99,7 @@ class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
      */
     protected function getTemplate($name)
     {
-        $template = $this->templateRepository->findOneBy(array('name', $name));
+        $template = $this->templateRepository->findOneBy(array('name' => $name));
 
         if ($template === null) {
             throw new \Twig_Error_Loader(sprintf('Unable to find template "%s".', $name));
