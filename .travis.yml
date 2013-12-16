@@ -12,6 +12,7 @@ env:
     - TWIG_BUNDLE_VERSION=2.4
 
 before_script:
+    - echo "extension = <extension>.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
     - curl -s http://getcomposer.org/installer | php
     - if [ $(php -v | grep '5.3.3' -c) -ne 0 ]; then export PREFER="--prefer-source"; else PREFER="--prefer-dist"; fi
     - php composer.phar require symfony/twig-bundle:${TWIG_BUNDLE_VERSION} ${PREFER}
