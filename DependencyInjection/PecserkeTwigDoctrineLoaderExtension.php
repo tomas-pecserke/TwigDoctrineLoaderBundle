@@ -35,9 +35,6 @@ class PecserkeTwigDoctrineLoaderExtension extends Extension
             case 'mongodb':
                 $objectManagerServiceId = 'doctrine_mongodb.odm.%s_document_manager';
                 break;
-            case 'couchdb':
-                $objectManagerServiceId = 'doctrine_couchdb.%s_document_manager';
-                break;
             case 'orm':
             default:
                 $objectManagerServiceId = 'doctrine.%s_entity_manager';

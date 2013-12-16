@@ -32,7 +32,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
                 ->enumNode('backend')
-                    ->values(array('orm', 'mongodb', 'couchdb'))
+                    ->values(array('orm', 'mongodb'))
                     ->defaultValue('orm') // use ORM by default
                 ->end()
                 ->scalarNode('manager_name')
