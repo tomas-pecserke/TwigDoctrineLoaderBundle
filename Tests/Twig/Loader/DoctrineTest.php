@@ -166,7 +166,8 @@ class DoctrineTest extends \PHPUnit_Framework_TestCase
         $loader = new Doctrine($repository, '');
 
         $source = 'template source';
-        $template = (new Template())->setSource($source);
+        $template = new Template();
+        $template->setSource($source);
         $name = 'template_name';
         $repository
             ->expects($this->once())
