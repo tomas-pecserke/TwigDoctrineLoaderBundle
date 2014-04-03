@@ -12,9 +12,8 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Pecserke\\Bundle\\TwigDoctrineLoaderBundle": "" }
+        "psr-4": { "Pecserke\\Bundle\\TwigDoctrineLoaderBundle\\": "" }
     },
-    "target-dir": "Pecserke/Bundle/TwigDoctrineLoaderBundle",
     "require": {
         "php": ">=5.3.3",
         "symfony/twig-bundle": "~2.2",
