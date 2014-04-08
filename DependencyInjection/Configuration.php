@@ -19,8 +19,6 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
  */
 class Configuration implements ConfigurationInterface
 {
-    const DEFAULT_TEMPLATE_CLASS = 'Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template';
-
     /**
      * {@inheritDoc}
      */
@@ -40,7 +38,7 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('template_class')
-                    ->defaultValue()
+                    ->defaultValue('Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template')
                     ->validate(self::DEFAULT_TEMPLATE_CLASS)
                         ->ifTrue(function($class) {
                             return $class !== self::DEFAULT_TEMPLATE_CLASS &&
