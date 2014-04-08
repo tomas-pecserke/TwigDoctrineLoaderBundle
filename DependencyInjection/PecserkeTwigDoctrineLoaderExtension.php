@@ -33,14 +33,14 @@ class PecserkeTwigDoctrineLoaderExtension extends Extension
         $container->setParameter(sprintf('%s.model_manager_name', $this->getAlias()), $config['manager_name']);
         switch ($config['backend']) {
             case 'mongodb':
-                $objectManagerServiceId = 'doctrine_mongodb.odm.%s_document_manager';
+                $objectManagerServiceId = sprintf('doctrine_mongodb.odm.%s_document_manager', $config['manager_name']);
                 break;
             case 'orm':
             default:
-                $objectManagerServiceId = 'doctrine.%s_entity_manager';
+                $managers = $container->getParameter('doctrine.entity_managers');
+                $objectManagerServiceId = $managers[$config['manager_name']];
                 break;
         }
-        $objectManagerServiceId = sprintf($objectManagerServiceId, $config['manager_name']);
         $container->setAlias('pecserke_twig_doctrine_loader.object_manager', $objectManagerServiceId);
         $container->setParameter('pecserke_twig_doctrine_loader.model.template.class', $config['template_class']);
 
