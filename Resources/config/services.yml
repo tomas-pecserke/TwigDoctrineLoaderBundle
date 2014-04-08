@@ -1,5 +1,6 @@
 parameters:
     pecserke_twig_doctrine_loader.twig.loader.doctrine.class: Pecserke\Bundle\TwigDoctrineLoaderBundle\Twig\Loader\Doctrine
+    pecserke_twig_doctrine_loader.template_repository.class: Doctrine\Common\Persistence\ObjectRepository
 
 services:
     pecserke_twig_doctrine_loader.twig.loader.doctrine:
@@ -9,6 +10,7 @@ services:
             - { name: twig.loader }
 
     pecserke_twig_doctrine_loader.template_repository:
+        class: %pecserke_twig_doctrine_loader.template_repository.class%
         factory_service: pecserke_twig_doctrine_loader.object_manager
         factory_method: getRepository
         arguments: [ %pecserke_twig_doctrine_loader.model.template.class% ]
