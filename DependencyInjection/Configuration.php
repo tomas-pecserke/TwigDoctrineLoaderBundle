@@ -20,6 +20,11 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 class Configuration implements ConfigurationInterface
 {
     /**
+     * @var string
+     */
+    const DEFAULT_TEMPLATE_CLASS = 'Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template';
+
+    /**
      * {@inheritDoc}
      */
     public function getConfigTreeBuilder()
@@ -38,14 +43,14 @@ class Configuration implements ConfigurationInterface
                     ->cannotBeEmpty()
                 ->end()
                 ->scalarNode('template_class')
-                    ->defaultValue('Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template')
-                    ->validate(self::DEFAULT_TEMPLATE_CLASS)
+                    ->defaultValue(static::DEFAULT_TEMPLATE_CLASS)
+                    ->validate(static::DEFAULT_TEMPLATE_CLASS)
                         ->ifTrue(function($class) {
-                            return $class !== self::DEFAULT_TEMPLATE_CLASS &&
-                                !is_subclass_of($class, self::DEFAULT_TEMPLATE_CLASS)
+                            return $class !== static::DEFAULT_TEMPLATE_CLASS &&
+                                !is_subclass_of($class, static::DEFAULT_TEMPLATE_CLASS)
                             ;
                         })
-                        ->thenInvalid('Template class "%s" is not subclass of "' . self::DEFAULT_TEMPLATE_CLASS . '".')
+                        ->thenInvalid('Template class "%s" is not subclass of "' . static::DEFAULT_TEMPLATE_CLASS . '".')
                     ->end()
                 ->end()
                 ->scalarNode('cache_prefix')
