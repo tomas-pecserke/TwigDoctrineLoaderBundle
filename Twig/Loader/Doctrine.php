@@ -56,7 +56,7 @@ class Doctrine implements \Twig_LoaderInterface, \Twig_ExistsLoaderInterface
                 ->setParameter('name', $name)
             ;
 
-            return $qb->getQuery()->getSingleScalarResult() !== 0;
+            return (int) $qb->getQuery()->getSingleScalarResult() !== 0;
         }
 
         if (class_exists('Doctrine\ODM\MongoDB\DocumentRepository') && $repo instanceof MongoDBDocumentRepository) {
