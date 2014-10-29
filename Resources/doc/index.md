@@ -54,7 +54,7 @@ pecserke_twig_doctrine_loader:
     backend: orm    # valid options are: orm, mongodb
     manager_name: default   # doctrine object manager to use with templates
     template_class: 'Pecserke\Bundle\TwigDoctrineLoaderBundle\Model\Template'   # template model class, must be subclass of this default class
-    cache_prefix: ~ #
+    cache_prefix: ~ # used as a part of cache key
 ```
 
 ## Creating templates
