@@ -23,11 +23,8 @@
     "require-dev": {
         "doctrine/doctrine-bundle": "~1.2",
         "doctrine/orm": "~2.3",
-        "doctrine/mongodb-odm-bundle": "master@dev",
-        "doctrine/mongodb-odm": "*@beta",
-        "doctrine/couchdb-odm-bundle": "master@dev",
-        "doctrine/couchdb-odm": "master@dev",
-        "doctrine/couchdb": "*@dev"
+        "doctrine/mongodb-odm-bundle": "~3.0@beta",
+        "doctrine/mongodb-odm": "*@beta"
     },
     "suggest": {
         "doctrine/doctrine-bundle": "Support for loading twig templates from relation databases",
