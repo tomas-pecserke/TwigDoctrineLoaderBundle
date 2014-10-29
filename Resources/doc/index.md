@@ -85,7 +85,7 @@ You can get most out of this bundle, if you use it with
 
 namespace Acme\Bundle\DemoBundle\Controller\DemoController;
 
-import Symfony\FrameworkBundle\Controller\Controller;
+use Symfony\FrameworkBundle\Controller\Controller;
 
 class DemoController extends Controller
 {
